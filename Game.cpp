@@ -24,7 +24,7 @@ void Game::Reset()
 	{
 		brick[i].width = 10;
 		brick[i].height = 2;
-		brick[i].x_position = i * 20;
+		brick[i].x_position = i * 15;
 		brick[i].y_position = 5;
 		brick[i].doubleThick = true;
 		brick[i].color = ConsoleColor::DarkGreen;
@@ -103,7 +103,11 @@ void Game::CheckCollision()
 
 
 	// TODO #6 - If no bricks remain, pause ball and display (render) victory text with R to reset
-
+	if (brick.size() == 0)
+	{
+		ball.moving = false;
+		std::cout << "Victory! - Press 'R' to Restart!"; // Win
+	}
 
 	if (paddle.Contains(ball.x_position + ball.x_velocity, ball.y_velocity + ball.y_position))
 	{
