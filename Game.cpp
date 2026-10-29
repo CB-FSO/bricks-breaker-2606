@@ -79,6 +79,20 @@ void Game::Render() const
 	}
 		
 
+	// TODO #6 - If no bricks remain, pause ball and display (render) victory text with R to reset
+	if (brick.size() == 0) //win
+	{
+		Console::SetCursorPosition(20, 15);
+		std::cout << "Victory! - Press 'R' to reset!";
+	}
+
+	// TODO #7 - If ball touches bottom of window, pause ball and display (render) defeat text with R to reset
+	if (ball.y_position == Console::WindowHeight()) //loss
+	{
+		Console::SetCursorPosition(20, 15);
+		std::cout << "Defeat! - Press 'R' to reset!";
+	}
+
 	Console::Lock(false);
 }
 
@@ -101,23 +115,18 @@ void Game::CheckCollision()
 		}
 	}
 
-
-	// TODO #6 - If no bricks remain, pause ball and display (render) victory text with R to reset
-	if (brick.size() == 0)
-	{
-		ball.moving = false;
-		std::cout << "Victory! - Press 'R' to Restart!"; // Win
-	}
-
 	if (paddle.Contains(ball.x_position + ball.x_velocity, ball.y_velocity + ball.y_position))
 	{
 		ball.y_velocity *= -1;
 	}
 
-	// TODO #7 - If ball touches bottom of window, pause ball and display (render) defeat text with R to reset
-	if (ball.y_position > paddle.y_position)
+	if (brick.size() == 0)
 	{
 		ball.moving = false;
-		std::cout << "Defeat! - Press 'R' to Restart!"; // Loss
+	}
+
+	if (ball.y_position == Console::WindowHeight())
+	{
+		ball.moving = false;
 	}
 }
